@@ -1,0 +1,19 @@
+{
+  "name": "stocks-disbot",
+  "version": "0.1.0",
+  "main": "src/app.js",
+  "license": "MIT",
+  "scripts": {
+    "start": "babel src -d dist && node dist/app.js",
+    "develop": "babel src -d dist --watch && node dist/app.js"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.22.9",
+    "@babel/preset-env": "^7.22.9"
+  },
+  "dependencies": {
+    "@babel/cli": "7.22.9",
+    "discord.js": "14.12.1",
+    "dotenv": "16.3.1"
+  }
+}
