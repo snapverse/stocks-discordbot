@@ -1,6 +1,7 @@
 import 'dotenv/config';
 
 const {
+  API_PREFIX,
   BOT_TOKEN,
   CHANNEL_ID,
   BOT_ID,
@@ -10,10 +11,11 @@ const {
 } = process.env;
 
 export {
-  BOT_TOKEN,
-  BOT_ID,
-  CHANNEL_ID,
+  API_PREFIX,
   BASIC_ROLE_ID,
-  STANDARD_ROLE_ID,
-  PREMIUM_ROLE_ID
+  BOT_ID,
+  BOT_TOKEN,
+  CHANNEL_ID,
+  PREMIUM_ROLE_ID,
+  STANDARD_ROLE_ID
 };

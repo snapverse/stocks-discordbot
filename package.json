@@ -1,19 +1,26 @@
 {
   "name": "stocks-disbot",
   "version": "0.1.0",
-  "main": "src/app.js",
+  "main": "src/app.ts",
   "license": "MIT",
   "scripts": {
-    "start": "babel src -d dist && node dist/app.js",
-    "develop": "babel src -d dist --watch && node dist/app.js"
+    "start": "node dist/app.js",
+    "watch:babel": "yarn run build --watch",
+    "watch:node": "nodemon dist/app.js",
+    "build": "babel src --out-dir dist --extensions \".ts,.tsx\" --source-maps inline"
   },
   "devDependencies": {
-    "@babel/core": "^7.22.9",
-    "@babel/preset-env": "^7.22.9"
+    "@babel/cli": "7.22.9",
+    "@babel/core": "7.22.9",
+    "@babel/preset-env": "7.22.9",
+    "@babel/preset-typescript": "7.22.5",
+    "@types/isomorphic-fetch": "^0.0.36",
+    "@types/node": "^20.4.9",
+    "nodemon": "3.0.1"
   },
   "dependencies": {
-    "@babel/cli": "7.22.9",
     "discord.js": "14.12.1",
-    "dotenv": "16.3.1"
+    "dotenv": "16.3.1",
+    "isomorphic-fetch": "3.0.0"
   }
 }
