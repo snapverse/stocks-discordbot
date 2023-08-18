@@ -16,11 +16,14 @@
     "@babel/preset-typescript": "7.22.5",
     "@types/isomorphic-fetch": "^0.0.36",
     "@types/node": "^20.4.9",
+    "@types/node-cron": "^3.0.8",
     "nodemon": "3.0.1"
   },
   "dependencies": {
     "discord.js": "14.12.1",
     "dotenv": "16.3.1",
-    "isomorphic-fetch": "3.0.0"
+    "fastify": "^4.21.0",
+    "isomorphic-fetch": "3.0.0",
+    "node-cron": "^3.0.2"
   }
 }

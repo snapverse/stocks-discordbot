@@ -5,3 +5,9 @@ export const Roles = Object.freeze({
   STANDARD: STANDARD_ROLE_ID || '',
   PREMIUM: PREMIUM_ROLE_ID || ''
 });
+
+export const RolesById = Object.freeze({
+  1: PREMIUM_ROLE_ID || '',
+  2: STANDARD_ROLE_ID || '',
+  3: BASIC_ROLE_ID || ''
+});

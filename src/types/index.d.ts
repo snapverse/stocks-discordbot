@@ -12,6 +12,7 @@ interface User {
   end_date: string | null;
   country_code: 'None' | string;
   client: Client;
+  subscription_usuario: Subscription;
 }
 
 interface Client {
@@ -39,4 +40,19 @@ interface Plan {
   link_discord: string;
   start_date: string;
   end_date: string | null;
+}
+
+interface Subscription {
+  id: number;
+  user_id: number;
+  name: string;
+  stripe_id: string;
+  stripe_status: string;
+  stripe_price: string | null;
+  quantity: number | null;
+  trials_ends_at: string;
+  ends_at: string;
+  created_at: string;
+  updated_at: string | null;
+  historical_coupons_id: number | null;
 }
