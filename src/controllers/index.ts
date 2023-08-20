@@ -5,6 +5,12 @@ import { CHANNEL_ID, SERVER_ID } from '../env';
 import throwFeedbackMessage from '../helpers/throwFeedbackMessage';
 
 export default {
+  ping(client: Discord.Client<boolean>) {
+    return async (_request: FastifyRequest, _reply: FastifyReply) => {
+      const guildName = client.guilds.cache.get(SERVER_ID).name;
+      return `Pong from ${guildName}`;
+    };
+  },
   roleSwap(client: Discord.Client<boolean>) {
     return async (request: FastifyRequest, _reply: FastifyReply) => {
       try {
