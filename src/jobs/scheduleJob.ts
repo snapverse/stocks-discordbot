@@ -1,12 +1,10 @@
 import cron from 'node-cron';
+import echo from '../helpers/echo';
 
 export default (expr: string, task: VoidFunction) => {
-  console.info(
-    JSON.stringify({
-      time: Date.now(),
-      trigger: 'node-cron',
-      msg: `cron job for ${expr} setup`
-    })
+  echo.log(
+    'src/jobs/scheduleJob.ts:6',
+    `cron job for ${expr} setup`
   );
 
   cron.schedule(expr, () => {
