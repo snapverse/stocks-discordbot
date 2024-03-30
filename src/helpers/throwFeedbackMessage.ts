@@ -1,22 +1,18 @@
+import echo from './echo';
+
 export default ({ channel, message }: { channel: any; message: string }) => {
   channel
     .send(message)
     .then(() =>
-      console.info(
-        JSON.stringify({
-          time: Date.now(),
-          trigger: 'throwFeedbackMessage func',
-          msg: 'Feedback message sent by the bot'
-        })
+      echo.log(
+        `src/helpers/throwFeedbackMessage.ts:5`,
+        'Feedback message sent by the bot'
       )
     )
     .catch((e: any) =>
-      console.error(
-        JSON.stringify({
-          time: Date.now(),
-          trigger: 'throwFeedbackMessage func',
-          msg: e?.message || 'Error'
-        })
+      echo.error(
+        `src/helpers/throwFeedbackMessage.ts:14`,
+        e?.message || 'Error'
       )
     );
 };

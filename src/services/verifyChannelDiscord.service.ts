@@ -14,11 +14,13 @@ export default async (body: {
       }
     })
       .then(async res => {
-        const json = await res.json();
+        const data = await res.json();
 
-        if ([409, 404, 500].includes(res.status))
-          throw new Error(json?.message || '500 Server error 🤯');
-        resolve(json);
+        if ([409, 404, 500].includes(res.status)) {
+          throw new Error(data?.message || '500 Server error 🤯');
+        }
+
+        resolve(data);
       })
       .catch(err => {
         reject(err);

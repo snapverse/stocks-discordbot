@@ -2,6 +2,7 @@ import Discord from 'discord.js';
 import { CHANNEL_ID } from '../env';
 import assignRole from '../helpers/assignRole';
 import capitalizeWord from '../helpers/capitalizeWord';
+import echo from '../helpers/echo';
 import throwFeedbackMessage from '../helpers/throwFeedbackMessage';
 import useRoles from '../hooks/useRoles';
 import checkIfCancelled from '../jobs/checkIfCancelled';
@@ -10,15 +11,13 @@ import verifyChannelDiscord from '../services/verifyChannelDiscord.service';
 
 export default {
   clientReady(client: Discord.Client<true>) {
-    console.info(
-      JSON.stringify({
-        time: Date.now(),
-        trigger: 'clientReady event',
-        msg: `Ready! Logged in as ${client.user.tag}`
-      })
+    echo.log(
+      `src/handlers/index.ts:15`,
+      `Ready! Logged in as ${client.user.tag}`
     );
 
     scheduleJob('0 8,20 * * * *', checkIfCancelled(client)); // 8 AM and 8 PM
+    // scheduleJob('*/30 * * * * *', checkIfCancelled(client)); // each 30s
   },
   messageCreate(message: Discord.Message<boolean>) {
     if (message.author.bot) return;
@@ -33,13 +32,7 @@ export default {
         !roles.Premium ||
         !message.member
       ) {
-        console.error(
-          JSON.stringify({
-            time: Date.now(),
-            trigger: 'messageCreate event',
-            msg: 'Role or Member was not found!'
-          })
-        );
+        echo.error(`src/handlers/index.ts:31`, 'Role or Member was not found!');
         return;
       }
 
@@ -48,31 +41,38 @@ export default {
           discordUserId: message.member.id,
           verificationCode: messageContent
         })
-          .then(res => {
+          .then(async res => {
             const packageName = capitalizeWord(res.data);
 
-            assignRole({
+            const result = await assignRole({
               to: message.member,
               role: roles[packageName],
-              channel: message.channel
+              // channel: message.channel
+            });
+
+            throwFeedbackMessage({
+              channel: message.channel,
+              message: result
             });
           })
           .catch(err => {
             throwFeedbackMessage({
               channel: message.channel,
-              message: err.message
+              message: err?.message || err
             });
           });
+
+        return;
       }
+
+      throwFeedbackMessage({
+        channel: message.channel,
+        message:
+          'Oops! ❌ Looks like that code is unavailable. Double-check your email and try again later! 📧'
+      });
     }
   },
-  error(e: any) {
-    console.error(
-      JSON.stringify({
-        time: Date.now(),
-        trigger: 'error event',
-        msg: e || 'Error'
-      })
-    );
+  error(e: Error) {
+    echo.error(`src/handlers/index.ts:59`, e.message);
   }
 };

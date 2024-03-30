@@ -1,29 +1,28 @@
 import type Discord from 'discord.js';
-import throwFeedbackMessage from './throwFeedbackMessage';
+import echo from './echo';
 
-export default async ({
+const assignRole = async ({
   role,
-  channel,
-  to
+  // channel,
+  to: member
 }: {
   role: Discord.Role;
-  channel: any;
+  // channel: any;
   to: Discord.GuildMember;
 }): Promise<string> => {
+  // etc
   return await new Promise(async (resolve, reject) => {
-    if (role && to.permissions.has('ManageRoles')) {
-      try {
-        await to.roles.add(role);
-        const message = `Role <@&${role.id}> assigned to <@${to.user.id}>, check your new content!`;
-        throwFeedbackMessage({ channel, message });
-        resolve(message);
-      } catch {
-        const message = `Error adding role to <@${to.user.tag}>`;
-        throwFeedbackMessage({ channel, message });
-        reject(message);
-      }
-    } else {
-      reject("Role not found or bot doesn't have the required permissions.");
+    try {
+      // if (role && !member.permissions.has('ManageRoles')) {
+      await member.roles.add(role);
+      const message = `Role <@&${role.id}> assigned to <@${member.user.id}>, check your new content!`;
+      resolve(message);
+    } catch (err) {
+      echo.error('src/helpers/assignRole.ts:22', err.message);
+      const message = `Error adding role to <@${member.user.id}>`;
+      reject(message);
     }
   });
 };
+
+export default assignRole;
